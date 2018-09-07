@@ -43,10 +43,14 @@ def get_sub_domain_info(sd, md):
     # print(result['DomainRecords']['Record'])
     # ['RecordId']['RR']['Type']['Line']['Value']['TTL']['Status']
     # 0000001 sub_domain A default xxx.xxx.xxx.xx 600 ENABLE
-    for domain_list in result['DomainRecords']['Record']:
-        if sd == domain_list['RR']:
-            return domain_list['RecordId'], domain_list['Value']
-    return None
+    try:
+        for domain_list in result['DomainRecords']['Record']:
+            if sd == domain_list['RR']:
+                return domain_list['RecordId'], domain_list['Value']
+        raise Exception('no sub domain')
+    except Exception as e:
+        logger.info('Sub domain error[EXIT]:' + str(e))
+        sys.exit(1)
 
 
 # Update sub domain
@@ -68,9 +72,9 @@ def update_rr(record_id, sd, ip):
 
 # Update sub domain entrance
 def update_sub_domain(sd, md):
-    try:    
-        sub_domain_id, record_ip = get_sub_domain_info(sd, md)
-        my_ip = get_my_ip()
+    sub_domain_id, record_ip = get_sub_domain_info(sd, md)
+    my_ip = get_my_ip()
+    try:
         ip_check = ipaddress.ip_address(my_ip).is_global
     except Exception as e:
         # print(e)
