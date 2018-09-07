@@ -68,9 +68,9 @@ def update_rr(record_id, sd, ip):
 
 # Update sub domain entrance
 def update_sub_domain(sd, md):
-    sub_domain_id, record_ip = get_sub_domain_info(sd, md)
-    my_ip = get_my_ip()
-    try:
+    try:    
+        sub_domain_id, record_ip = get_sub_domain_info(sd, md)
+        my_ip = get_my_ip()
         ip_check = ipaddress.ip_address(my_ip).is_global
     except Exception as e:
         # print(e)
