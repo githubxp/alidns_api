@@ -23,7 +23,7 @@ client = AcsClient(
 # Logging
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
-handler = RotatingFileHandler('update_dns.log', maxBytes=10485760, backupCount=5, encoding='UTF-8')
+handler = RotatingFileHandler('/var/log/alidns.log', maxBytes=10485760, backupCount=5, encoding='UTF-8')
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(lineno)d - %(levelname)s - %(message)s')
 handler.setFormatter(formatter)
 logger.addHandler(handler)
